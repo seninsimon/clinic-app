@@ -1,8 +1,12 @@
 import { IUser } from "../entities/User";
+import { IOtp } from "../entities/Otp";
 
 export interface UserRepository{
    createUser(user:Partial<IUser>):Promise<IUser>
    findByEmail(email:string):Promise<IUser|null>
+   createOtp(data: IOtp): Promise<void>;
+   verifyOtp(email: string, otp: string): Promise<void>;
+
     // findByGoogleId(googleId:string):Promise<IUser|null>
     // fetchUser():Promise<IUser[]>;
     // blockunblock(userid:string, isBlocked:boolean):Promise<IUser>

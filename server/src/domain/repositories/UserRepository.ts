@@ -6,8 +6,7 @@ export interface UserRepository{
    findByEmail(email:string):Promise<IUser|null>
    createOtp(data: IOtp): Promise<void>;
    verifyOtp(email: string, otp: string): Promise<void>;
-
-    // findByGoogleId(googleId:string):Promise<IUser|null>
+//    findByGoogleId(googleId:string):Promise<IUser|null>
     // fetchUser():Promise<IUser[]>;
     // blockunblock(userid:string, isBlocked:boolean):Promise<IUser>
     // findByEmailAndUpdate(password:string, email:string):Promise<IUser|null>

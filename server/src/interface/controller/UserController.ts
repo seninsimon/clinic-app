@@ -11,7 +11,7 @@ export class UserController {
         private registerUser : RegisterUser ,
         private otpCreation : OtpCreation ,
         private verifyOtp : VerifyOtp,
-        private loginuse : Login
+        private loginuse : Login,
     ){}
 
 
@@ -45,6 +45,8 @@ export class UserController {
                res.status(400).json({message : "verification required " , otpverify : false , email : loginUser.data.email})
                return
              }
+             
+
             res.status(200).json({message : "user login success" , loginUser})
             
         } catch (error) {
@@ -93,6 +95,23 @@ export class UserController {
              console.log("error in sending otp")
              res.status(500).json({message : "internal server error verifying otp"})
         }
+    }
+
+    async googleLogin(req : Request , res : Response): Promise<void>
+    {
+        try {
+            
+            const {tokenId} = req.body
+            const googleData = await this.loginuse.googleLogin(tokenId)
+            res.status(200).json({message : "google login done successfully" , googleData})
+
+
+            
+        } catch (error) {
+            console.log("error google auth")
+            res.status(500).json({message : "internal server error google login"})
+        }
+
     }
 
 

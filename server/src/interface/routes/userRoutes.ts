@@ -37,6 +37,7 @@ router.post('/signup',(req,res)=>usercontroller.signup(req,res))
 router.post("/login", (req,res)=>usercontroller.login(req,res) )
 router.post("/send-otp", (req,res)=>usercontroller.sendOtp(req,res) )
 router.post("/verify-otp", (req,res)=>usercontroller.verifyingOtp(req,res) )
+router.post("/google-login", (req,res)=>usercontroller.googleLogin(req,res) )
 
 
 

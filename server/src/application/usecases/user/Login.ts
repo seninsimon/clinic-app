@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs"
 import { sendMail } from "../../services/nodeMailerService";
 import { generateOtp } from "../../services/OtpSevice";
 import jwt from "jsonwebtoken"
+import { OAuth2Client } from "google-auth-library";
 
 
 export class Login {
@@ -38,10 +39,7 @@ export class Login {
             
             }
         
-        
-
-
-           
+          
         const accessToken = jwt.sign(
         { id: user._id , role : user.role},
         process.env.JWT_SECRET!,
@@ -51,4 +49,68 @@ export class Login {
                 
         return {message : "login success" , token : accessToken , data : user}
     }
+  
+   async googleLogin(tokenId: string): Promise<{ message: string; token: string; data: Partial<IUser> }> {
+    // 1. Verify the token
+
+   
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+    const ticket = await client.verifyIdToken({
+      idToken: tokenId,
+      audience: process.env.GOOGLE_CLIENT_ID 
+    });
+
+   
+
+    const payload = ticket.getPayload();
+    if (!payload || !payload.email) throw new Error("Google token invalid");
+
+    const email = payload.email;
+    const name = payload.name || "No Name";
+    const googleIds = payload.sub
+
+    
+
+    // 2. Check if user exists
+    let user = await this.userRepo.findByEmail(email);
+    
+    // 3. If not, create new user (optional: auto-register)
+    if (!user) {
+      const newUser: Partial<IUser> = {
+        email,
+        name,
+        isVerified: true,
+        googleIds, 
+        
+      };
+      const user =  await this.userRepo.createUser(newUser)
+      console.log(user)
+       // 4. Generate your own JWT
+    const accessToken = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET!,
+      { expiresIn: "15m" }
+    );
+    return {
+      message: "Google login successful",
+      token: accessToken,
+      data: user,
+    };
+      
+    }
+
+    // 4. Generate your own JWT
+    const accessToken = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET!,
+      { expiresIn: "15m" }
+    );
+
+    return {
+      message: "Google login successful",
+      token: accessToken,
+      data: user,
+    };
+}
+
 }

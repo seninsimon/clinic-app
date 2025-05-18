@@ -25,6 +25,7 @@ app.use("/", userRouter)
 
 
 
+
 // Start server
 connectToDatabase().then(() => {
   app.listen(PORT, () => {

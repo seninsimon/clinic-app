@@ -6,8 +6,9 @@ import { UserModel } from "../models/UserModel";
 
 
 export class UserRepositoryImpl implements UserRepository{
-   async  createUser(user: Partial<IUser>): Promise<IUser> {
 
+    // registering patient
+   async  createUser(user: Partial<IUser>): Promise<IUser> {
     const createdUser = await UserModel.create(user)
     console.log("user created :" ,createdUser)
     return createdUser
@@ -39,6 +40,8 @@ export class UserRepositoryImpl implements UserRepository{
 
         
     }
+
+    
 
      
 }

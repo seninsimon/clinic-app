@@ -74,7 +74,7 @@ export class Login {
     // 2. Check if user exists
     let user = await this.userRepo.findByEmail(email);
     
-    // 3. If not, create new user (optional: auto-register)
+ 
     if (!user) {
       const newUser: Partial<IUser> = {
         email,

@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IUser } from "../../domain/entities/User";
 
 const userSchema: Schema<IUser> = new mongoose.Schema(

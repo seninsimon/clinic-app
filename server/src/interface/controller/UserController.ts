@@ -1,5 +1,5 @@
 import { Request , Response } from "express";
-import { RegisterUser } from "../../application/usecases/user/RegisterUser";
+import { RegisterUser } from "../../application/usecases/user/Register";
 import { OtpCreation } from "../../application/usecases/otp/Otpcreation";
 import { VerifyOtp } from "../../application/usecases/otp/OtpVerification";
 import { Login } from "../../application/usecases/user/Login";

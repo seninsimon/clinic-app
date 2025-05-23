@@ -4,6 +4,8 @@ import { connectToDatabase } from "./config/db";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { userRouter } from "./interface/routes/userRoutes";
+import { doctorRouter } from "./interface/routes/doctorRoutes";
+import { adminRouter } from "./interface/routes/adminRoutes";
 
 dotenv.config();
 const app = express();
@@ -22,6 +24,8 @@ app.use(express.urlencoded({extended : true}));
 //userroutes
 
 app.use("/", userRouter)
+app.use("/", doctorRouter)
+app.use("/", adminRouter)
 
 
 
